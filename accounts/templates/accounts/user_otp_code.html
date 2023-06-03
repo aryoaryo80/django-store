@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }} <br>
+        <input class="btn btn-outline-info" type="submit" value="Send">
+        <a class="btn btn-outline-success" href="{% url 'accounts:resend' %}">Resend Code</a>
+    </form>
+{% endblock content %}
+    

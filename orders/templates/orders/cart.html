@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<table class="table text-white table-dark table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Price</th>
+        <th scope="col">Total Price</th>
+        <th scope="col">Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+        
+        {% for key, product in request.session.cart.items %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{ product.name }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.total_price }}</td>
+                <td><a class="btn btn-outline-danger" href="{% url 'orders:del_from_cart' key %}">Delete</a></td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="4" >{{ product.quantity }}</td>
+            <th>Total price of all:</th>
+            <td><a class="btn btn-success" href="{% url 'orders:create_order' %}">Create order</a></td>
+        </tr>
+    </tbody>
+  </table>
+    <br><br>
+    
+    {% if orders %}
+      <h2>your orders: </h2>
+      {% for order in orders %}
+            <br>
+            <p class="font-monospace"><a href="{% url 'orders:order_detail' order.id %}">{{ order.id }}</a> - products : {{ order.items.count }} - price : {{ order.get_total_price }}</p>
+      {% endfor %}
+        
+    {% endif %}
+      
+{% endblock content %}
+    

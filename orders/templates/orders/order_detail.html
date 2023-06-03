@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <h3>Order Detail</h3><br>
+<table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Price</th>
+        <th scope="col">Total Price</th>
+      </tr>
+    </thead>
+    <tbody>
+        
+        {% for item in order.items.all %}
+        <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.get_cost }}</td>
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table><br>
+    <h2>Total sum of all: {{ order.get_total_price }}</h2><br>
+
+    {% if order.discount %}
+        <h1>Your discount: {{ order.discount }}</h1><br>
+        
+        <h1>Final Price: {{ order.final_price }}</h1>
+    {% endif %}
+    <br>
+
+<form class="row g-3" action="{% url 'orders:apply_order' order.id %}" method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {{ form.quantity.errors }}
+    <div class="col-auto col-md-1">
+      <label for="inputPassword2" class="visually-hidden">{{ form.code.id_for_label }}</label>
+      {{ form.code }}
+
+    </div>
+    <div class="col-auto">
+      <!-- <button type="submit" class="btn btn-primary mb-3">Confirm identity</button> -->
+      <input type="submit" class="btn btn-outline-info" value="Apply coupon" >
+    </div>
+</form>
+
+    <br>
+    <a class="btn btn-success btn-lg" href="">Checkout</a>
+{% endblock content %}
+    

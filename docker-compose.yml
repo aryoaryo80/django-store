@@ -1,0 +1,38 @@
+services:
+  rabbitmq:
+    container_name: 'rabbitmq'
+    image: rabbitmq
+    networks:
+      - main
+    restart: always
+  celery:
+    container_name: 'celery'
+    build: .
+    networks:
+      - main
+    command: "celery -A t worker -l info"
+    environment:
+      - C_FORCE_ROOT="true"
+    restart: always
+  celery_beat:
+    container_name: 'celery_beat'
+    build: .
+    networks:
+      - main
+    command: 'celery -A t beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler'
+    restart: always
+  app:
+    container_name: app
+    build: .
+    command: "gunicorn t.wsgi -b 0.0.0.0:8000"
+    networks:
+      - main
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/src
+    restart: always
+
+
+networks:
+  main:

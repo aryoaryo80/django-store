@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+    
+
+{% block content %}
+
+<div class="text-white">
+    <h3>{{ product.name }}</h3>
+    <br>
+    <img class="rounded float" src="{{ product.image.url }}" style="width: 300;">
+    <br><br>
+    <h2>{{ product.description }}</h2>
+    <br>
+    <h2>Price: {{ product.price }}</h2><br>
+    <form class="row g-3" action="{% url 'orders:add_to_cart' product.slug %}" method="post" novalidate>
+        {{ form.non_field_errors }}
+        {% csrf_token %}
+        {{ form.quantity.errors }}
+        <div class="col-auto col-md-1">
+            <label for="inputPassword2" class="visually-hidden">{{ form.quantity.id_for_label }}</label>
+            {{ form.quantity }}
+
+        </div>
+        <div class="col-auto">
+            <!-- <button type="submit" class="btn btn-primary mb-3">Confirm identity</button> -->
+            <input type="submit" class="btn btn-outline-info" value="Add to cart" >
+        </div>
+    </form>
+</div>
+
+{% endblock content %}
