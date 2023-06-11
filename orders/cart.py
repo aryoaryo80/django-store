@@ -19,6 +19,8 @@ class Cart:
                 'quantity': 0, 'price': product.price, 'name': product.name, 'total_price': 0}
         self.cart[product_id]['quantity'] += quantity
         self.cart[product_id]['total_price'] = self.cart[product_id]['quantity'] * product.price
+        self.session['total'] = sum(item['total_price']
+                                    for item in self.cart.values())
         self.save()
 
     def del_form_cart(self, product_id):

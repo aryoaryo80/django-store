@@ -30,7 +30,7 @@
     <h2>Total sum of all: {{ order.get_total_price }}</h2><br>
 
     {% if order.discount %}
-        <h1>Your discount: {{ order.discount }}</h1><br>
+        <h1>Your discount: {{ order.discount }}%</h1><br>
         
         <h1>Final Price: {{ order.final_price }}</h1>
     {% endif %}

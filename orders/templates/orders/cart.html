@@ -26,9 +26,15 @@
             </tr>
         {% endfor %}
         <tr>
-            <td colspan="4" >{{ product.quantity }}</td>
-            <th>Total price of all:</th>
-            <td><a class="btn btn-success" href="{% url 'orders:create_order' %}">Create order</a></td>
+            
+            {% if request.session.total > 0 %}
+              <td colspan="3" ></td>
+              <th>Total price of all:</th>
+
+              <th>{{ request.session.total }}</th>
+                          
+              <td><a class="btn btn-success" href="{% url 'orders:create_order' %}">Create order</a></td>    
+            {% endif %}
         </tr>
     </tbody>
   </table>

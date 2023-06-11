@@ -10,11 +10,11 @@ Usage with docker
 docker compose up -d
 ```
 
-Then go to localhost:8000 to view site
+Then go to [localhost:8000](http://localhost:8000) to view site
 
 ## Features 🚀
 
 - **Django** web application framework
-- **Django storages** for work with aw3 storage
+- **Django storages** for work with Arvancloud storage
 - **Celery** worker and beat services for running background tasks asynchronously
-- **Rabbitmq** broker
+- **Rabbitmq** message broker
